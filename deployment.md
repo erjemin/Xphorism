@@ -198,7 +198,7 @@ mysql>
 
 Поздравляю, мы внутри консольного клиента MySQL. Создаем базу данных нашего проекта **(django_xphorism)**:
 ```sql
-CREATE DATABASE django_classify DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+CREATE DATABASE django_xphorism DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 ```
 Затем, чтобы наше Django-приложение не работало с базой под аккаунтом  супер-пользователя **root**, создаем нового пользователя базы **[user]** с паролем «_secret_password_mysql_user_»:
 ```sql
@@ -299,29 +299,29 @@ pip install django-debug-toolbar==1.8
 
 Наш проект подготовлен. Можем создать миграцию, которая создаст все необходимые таблицы в нашей базе дынных. Но перед тем как ее выполнить нам надо исправить настройки проекта `settings.py` и указать в ней настройки наших папок и логинов в базу данных:
 ```
-nano $HOME/[адрес сайта]/Xphorism/classifier/settings.py
+nano $HOME/[адрес сайта]/Xphorism/Xphorism/settings.py
 ```
 
 Находим в ней строки для настройки почты и меняем значения `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER` и `EMAIL_HOST_PASSWORD` для работы email:
 ```Python
 EMAIL_HOST  = 'mail.server.ru'                 # хост почтового SMTP-сервера
-EMAIL_PORT  = 587                              # порт  почтового SMTP-сервера
+EMAIL_PORT  = 2525                             # порт  почтового SMTP-сервера
 EMAIL_HOST_USER = '[user]@server.ru'           # логин (email) для входа на почтовый сервер
 EMAIL_HOST_PASSWORD = 'password_to_mail'       # пароль для входа на почтовый сервер
 ```
 Аналогичные изменения вносим для настроек рабочих каталогов файлов статики, медия и базы данных. Для файлов меняем параметры `STATIC_ROOT`, `STATIC_BASE_PATH` и `MEDIA_ROOT` указывая вместо **`[user]`** имя нашего пользователя, а вместо **`[адрес сайта]`** имя папки, которая, как мы договорились ранее, совпадает с адресом сайта. Для базы данных меняем параметры `'USER'` и `'PASSWORD'`:
 ```Python
-if (socket.gethostname() == 'raspberrypi'):
+if (socket.gethostname() == 'debian01'):
     # НАЗНАЧЕНИЕ ДИРЕКТОРИЙ ДЛЯ ПРОДАКШН-СЕРВЕРА (RASPBERRY PI 3) ----
-    STATIC_ROOT         = '/home/[user]/[адрес сайта]/classifier-manager/static'
-    STATIC_BASE_PATH    = '/home/[user]/[адрес сайта]/classifier-manager/static'
-    MEDIA_ROOT          = '/home/[user]/[адрес сайта]/classifier-manager/media'
+    STATIC_ROOT = '/home/[user]/[адрес сайта]/public/static'
+    MEDIA_ROOT  = '/home/[user]/[адрес сайта]/public/public/media/'
+    MY_SITE_ROOT= '/home/[user]/[адрес сайта]/public/'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'HOST': 'localhost',                         # хост для соединения с базой данных
             'PORT': '3306',                              # порт для соединения с базой данных
-            'NAME': 'django_classify',                   # имя базы данных
+            'NAME': 'django_xphorism',                   # имя базы данных
             'USER': '[user]',                            # пользователь базы данных
             'PASSWORD': 'secret_password_mysql_user',    # пароль пользователя базы данных
             'OPTIONS': { 'autocommit': True, }
@@ -399,7 +399,7 @@ Copying '/home/[user]/[адрес сайта]/env/local/lib/python2.7/site-packages/django
 Copying '/home/[user]/[адрес сайта]/env/local/lib/python2.7/site-packages/django/contrib/admin/static/admin/img/gis/move_vertex_on.svg'
 Copying '/home/[user]/[адрес сайта]/env/local/lib/python2.7/site-packages/django/contrib/admin/static/admin/img/gis/move_vertex_off.svg'
 
-57 static files copied to '/home/[user]/[адрес сайта]/classifier-manager/static', 8 unmodified.
+57 static files copied to '/home/[user]/[адрес сайта]/public/static', 8 unmodified.
 ```
 
 Все! Проект развернут, настроен и готов к тестовому запуску с помощью встроенного в Django веб-сервера:
@@ -713,7 +713,7 @@ nano $HOME/[адрес сайта]/config/[адрес сайта]_uwsgi.ini
 # НАСТРОЙКИ ДЛЯ DJANGO
 # Корневая папка проекта (полный путь)
 chdir           = /home/[user]/[адрес сайта]/Xphorism
-# Django wsgi файл classifier/wsgi.py записываем так:
+# Django wsgi файл Xphorism/wsgi.py записываем так:
 module          = Xphorism.wsgi
 # полный путь к виртуальному окружению
 home            = /home/[user]/[адрес сайта]/env
