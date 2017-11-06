@@ -1,8 +1,7 @@
-# для агрегатора коммерческих предложений пластиковых окон -- ОКНАРДИЯ
+# test
 User-Agent: *
 Allow: /
-Disallow: /service
 Disallow: /admin
-Host: https://oknardia.ru
-Sitemap: https://oknardia.ru/sitemap.xml
+Host: http://x.cube2.ru
+Sitemap: http://x.cube2.ru/sitemap.xml
 

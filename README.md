@@ -1,13 +1,15 @@
 # Xphorism
 
 ### Test-проект (pet-project)
-###### Решение тестового задания X5 RETAIL GROUP, Центральный офис
+##### Решение тестового задания X5 RETAIL GROUP, Центральный офис
 
-Данный репозиторий -- решение мини-заданиз на соискание должности программиста по вакансии [Старший разработчик Python] (https://hh.ru/vacancy/22258372) https://hh.ru/vacancy/22258372 -- временный и будет переделан для проекта ***Xphorism**
+Данный репозиторий -- решение мини-заданиз на соискание должности программиста по вакансии [Старший разработчик Python](https://hh.ru/vacancy/22258372) https://hh.ru/vacancy/22258372 -- временный и будет переделан для проекта **Xphorism***.
 
-Решение развенуто в тестовом режиме по адресу: [http://x.cube2.ru/[ (http://x.cube2.ru/)
+Решение развенуто по адресу: [x.cube2.ru](http://x.cube2.ru/)
 
-Окружение необходимое для работы проекта размещено в [requirements_e450.txt] (https://github.com/erjemin/Xphorism/blob/master/public/requirements_e450.txt).
+Окружение необходимое для работы проекта размещено в файле [requirements_e450.txt](https://github.com/erjemin/Xphorism/blob/master/public/requirements_e450.txt).
+
+Инструкция по развертыванию проекта и настройке серевера в файле [deployment.md](https://github.com/erjemin/Xphorism/blob/master/deployment.md)
 
 
 ------
