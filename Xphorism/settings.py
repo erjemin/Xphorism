@@ -36,10 +36,10 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',            # Allow domain and subdomains
+    '127.0.0.1',
     'localhost',
     '192.168.1.11',         # для консольного тестирования через manager.py
-    'x.cube2.ru',           # деплой
+    'x.cube2.ru',           # деплой-сервер
 ]
 
 # os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
@@ -52,8 +52,8 @@ ADMINS = (
 
 #########################################
 # настройки для почтового сервера
-EMAIL_HOST  = 'smtp.mail.ru' # SMTP server
-EMAIL_PORT  = 2525 # для SSL/https
+EMAIL_HOST = 'smtp.mail.ru'        # SMTP server
+EMAIL_PORT = 2525                  # для SSL/https
 EMAIL_HOST_USER = u'что-то@что-то.ru' # login if requared or ''
 EMAIL_HOST_PASSWORD = u'ОЧенЬ_Секретный_Пароль'       # password
 SERVER_EMAIL = DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
