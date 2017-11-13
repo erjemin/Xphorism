@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Sergei Erjemin'
 from django.shortcuts import render, HttpResponseRedirect
-from app.models import tbContacts, tbTelephones
+from app.models import tbPersons, tbTelephones
 from django.http import HttpResponse
 import time
 import re

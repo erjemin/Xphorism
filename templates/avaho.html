@@ -34,15 +34,28 @@
 <body>
 <div class="container-fluid">
   <div class="row">
-    <h1 class="col-xs-10">Tests</h1>
-    <div class="col-xs-12">
-      <ol>
-        <li><a href="/x5/">x5</a></li>
-        <li><a href="/avaho/">avaho</a></li>
-      </ol>
-    </div>
+    <h1 class="col-xs-10">Кночоки</h1>
   </div>
 
+  <div class="row">
+    <div class="col-xs-5" id="toBlock">Тут будут кнопочки</div>
+  </div>
+
+<script type="application/javascript">
+  var arrButtons = "123";
+  function makeButtons(){
+    $('#toBlock').html("");
+    for (i = 0; i < arrButtons.length; i++)
+      $('#toBlock').append("<button type='button' class='btn btn-default' onclick='remakeButtons();'>" + arrButtons[i] +"</button><br />");
+  }
+  function remakeButtons() {
+    arrButtons = arrButtons.slice(1) + arrButtons[0];
+    makeButtons();
+  }
+  $(document).ready(function () {
+    makeButtons();
+  })
+</script>
 
 
 

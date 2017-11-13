@@ -2,12 +2,12 @@
 __author__ = 'Sergei Erjemin'
 
 from django.contrib import admin
-from app.models import tbContacts, tbTelephones
+from app.models import tbPersons, tbTelephones
 
 class ContactsAdmin (admin.ModelAdmin):
-    search_fields = ['szPersonBigName', 'szParsonAdress']
-    list_display = ('szPersonBigName', 'id', 'szParsonAdress' )
-admin.site.register(tbContacts, ContactsAdmin)
+    search_fields = ['szPersonName', 'szParsonAdress']
+    list_display = ('szPersonName', 'id', 'szParsonAdress' )
+admin.site.register(tbPersons, ContactsAdmin)
 
 
 class TelephonesAdmin (admin.ModelAdmin):

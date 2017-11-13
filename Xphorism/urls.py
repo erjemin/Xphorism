@@ -9,7 +9,9 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url( r'^$', views.start ),
+    url( r'^x5[/]$', views.x5 ),
     url( r'^getPersonContact/(?P<ContactID>\d{1,})$', views.getPersonContact ),
+    url( r'^avaho[/]$', views.avaho ),
 
 ]
 

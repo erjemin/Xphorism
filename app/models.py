@@ -4,24 +4,25 @@ __author__ = 'Sergei Erjemin'
 from django.db import models
 
 # Таблица: Контактная информация (ФИО, адрес…)
-class tbContacts(models.Model):
-    szPersonBigName = models.CharField(
+class tbPersons(models.Model):
+    szPersonName = models.CharField(
         max_length=100,
         # должно хватать, но возможны инциденты: https://ru.wikipedia.org/wiki/Вольф%2B585_старший
         default=u"—",
         null=False,
         db_index=True,
         unique=True,
-        verbose_name=u"ФИО",
-        help_text=u"Полоне ФИО персоны.<br /><small><b>Допускается HTML</b>.</small>"
+        verbose_name=u"Имя",
+        help_text=u"Имя персоны.<br />"
+                  u"<small><b>Допускается HTML</b>.</small><br />"
+                  u"Имя будет отобращаться к подписи афризма."
     )
     szParsonAdress = models.CharField(
         max_length=140,
         # должно хватать. На сегодя самый длинный адрес в России -- 138 символов.
-        default=u"—",
-        null=False,
+        default=u"",
+        null=True,
         db_index=False,
-        unique=False,
         verbose_name=u"Адрес",
         help_text=u"Адрес проживания персоны."
     )
@@ -36,12 +37,14 @@ class tbContacts(models.Model):
     # )
 
     def __unicode__(self):
-        return u'%04d: %s' % (self.id, self.szPersonBigName )
+        return u'%04d: %s' % (self.id, self.szPersonName )
 
     class Meta:
+        db_table = 'tbPersons'
+        # managed = False
         verbose_name = u"Контактная информация (ФИО, адрес…)"
         verbose_name_plural = u"Контактная информация (ФИО, адрес…)"
-        ordering = ['szPersonBigName']
+        ordering = ['szPersonName']
 
 
 # Таблица: телефонные номера
@@ -53,7 +56,7 @@ class tbTelephones(models.Model):
         help_text=u"Номер телефона.<br /><small>Учитываются только цифры, <b>все нецифровые символы при выводе будут удалены</b>. Увы.</small>"
     )
     kContacts = models.ForeignKey(
-        'tbContacts',
+        'tbPersons',
         null=True,
         db_constraint = False,
         on_delete=models.SET_NULL,

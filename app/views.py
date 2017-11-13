@@ -2,15 +2,28 @@
 __author__ = 'Sergei Erjemin'
 
 from django.shortcuts import render, HttpResponseRedirect
-from app.models import tbContacts, tbTelephones
+from app.models import tbPersons, tbTelephones
 from django.http import HttpResponse
 import time
 import json
 
 from common_func import FormatPhonesNum
 
+def start (request):
+    # Показывает стртаничку с контактой информацией
+    template = "start.html" # шаблон для подгузки
+    response = render (request, template, {})
+    return response
 
-def start( request ):
+
+def avaho (request):
+    # Показывает стртаничку с контактой информацией
+    template = "avaho.html" # шаблон для подгузки
+    response = render (request, template, {})
+    return response
+
+
+def x5( request ):
     """░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░
     :param request: request
     :return: response
@@ -19,13 +32,13 @@ def start( request ):
     ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░"""
     tStart = time.clock()
     msg = u""
-    template = "start.html"
+    template = "x5.html"
     dimension_to_template = {}
 
     # iTotalContact = tbContacts.objects.count()
-    q = tbContacts.objects.raw('SELECT'
-                               '  MAX(app_tbcontacts.id) AS id '
-                               'FROM app_tbcontacts;')
+    q = tbPersons.objects.raw('SELECT'
+                              '  MAX(app_tbcontacts.id) AS id '
+                              'FROM app_tbcontacts;')
     dimension_to_template.update({'MAX_CONTACT_ID': list(q)[0].id})
     # FOR_TEST: создает базу телефонов
     # qsCountacts = tbContacts.objects.all()
