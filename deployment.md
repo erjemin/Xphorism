@@ -120,6 +120,55 @@ sudo nano /etc/issue.net
 ```
 Можете найти в интернете онлайн-утилиты, создать и добавить что-то своё.  Сохраняем баннер `Ctrl+O` и `Enter`, а выходим из редактора `Ctrl+X`.
 
+Также стоит удалить ssh-приветсвие, очистив файл `/etc/motd` 
+```bash
+sudo nano /etc/motd
+```
+Удаляем все. что там написано. Сохраняем `Ctrl+O` и `Enter`, а выходим из редактора `Ctrl+X`.
+
+Очень полезно при входе в систему (не только по SSH) отобразать служебную информацию о загрузке системы. Для этого надо в ппапку `/etc/profile.d/` добавить скрипт, который будет исполнятся при каждом входе. Отнрываем вайл на редактирование:
+```bash
+sudo nano /etc/profile.d/sshinfo.sh
+'''
+Помещаем в него следующий скрипт:
+```bash
+SystemMountPoint="/";
+LinesPrefix="  ";
+b=$(tput bold); n=$(tput sgr0);
+
+SystemLoad=$(cat /proc/loadavg | cut -d" " -f1);
+ProcessesCount=$(cat /proc/loadavg | cut -d"/" -f2 | cut -d" " -f1);
+
+MountPointInfo=$(/bin/df -Th $SystemMountPoint 2>/dev/null | tail -n 1);
+MountPointFreeSpace=( \
+  $(echo $MountPointInfo | awk '{ print $6 }') \
+  $(echo $MountPointInfo | awk '{ print $3 }') \
+);
+UsersOnlineCount=$(users | wc -w);
+
+UsedRAMsize=$(free | awk 'FNR == 3 {printf("%.0f", $3/($3+$4)*100);}');
+
+SystemUptime=$(uptime | sed 's/.*up \([^,]*\), .*/\1/');
+
+if [ ! -z "${LinesPrefix}" ] && [ ! -z "${SystemLoad}" ]; then
+  echo -e "${LinesPrefix}${b}Загрузка системы:${n}\t${SystemLoad}\t\t${LinesPrefix}${b}Процессов:${n}\t\t${ProcessesCou$
+fi;
+
+if [ ! -z "${MountPointFreeSpace[0]}" ] && [ ! -z "${MountPointFreeSpace[1]}" ]; then
+  echo -ne "${LinesPrefix}${b}Диск ($SystemMountPoint):${n}\t${MountPointFreeSpace[0]} из ${MountPointFreeSpace[1]}\t\t$
+fi;
+echo -e "${LinesPrefix}${b}Юзеров в системе:${n}\t${UsersOnlineCount}";
+
+if [ ! -z "${UsedRAMsize}" ]; then
+  echo -ne "${LinesPrefix}${b}Память:${n}\t${UsedRAMsize}%\t\t\t";
+fi;
+echo -e "${LinesPrefix}${b}Аптайм:${n}\t${SystemUptime}";
+```
+Сохраняем `Ctrl+O` и `Enter`, и выходим из редактора `Ctrl+X`. Затем надо дать право на запуск этого скрпита:
+```bash
+chmod +x /etc/profile.d/sshinfo.sh
+```
+
 Чтобы настройки подействовали нужно перезапустить ssh-сервис:
 ```bash
 sudo service ssh restart
@@ -129,7 +178,7 @@ sudo service ssh restart
 
 ## «Вишенка на торте» -- настраиваем сообщение при входе в систему и раскрашиваем оболочку bash
 
-ПРи входе в систему последовательно выполняются скрипты из папки `/etc/update-motd.d`. Они обеспечивают вывод приглашения и служебной информации. Убрать часть бесполезных подсказок можно просто запретив исполнение ненужных скриптов:
+При входе в систему последовательно выполняются скрипты из папки `/etc/update-motd.d`. Они обеспечивают вывод приглашения и служебной информации. Убрать часть бесполезных подсказок можно просто запретив исполнение ненужных скриптов:
 ```bash
 sudo chmod -x /etc/update-motd.d/10-help-text
 sudo chmod -x /etc/update-motd.d/51-cloudguest
